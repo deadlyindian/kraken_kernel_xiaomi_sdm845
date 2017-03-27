@@ -1426,6 +1426,9 @@ out_exit_policy:
 	if (cpufreq_driver->exit)
 		cpufreq_driver->exit(policy);
 
+	for_each_cpu(j, policy->real_cpus)
+		remove_cpu_dev_symlink(policy, get_cpu_device(j));
+
 out_free_policy:
 	cpufreq_policy_free(policy, !new_policy);
 	return ret;
