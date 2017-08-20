@@ -29,6 +29,10 @@ config IOSCHED_TRIPNDROID
 	  it uses deadlines to ensure some fairness. The scheduler is build
 	  to keep a minimum overhead. It is mainly build for mobile devices.
 
+config IOSCHED_MAPLE
+	tristate "Maple I/O scheduler"
+	default y
+
 config IOSCHED_CFQ
 	tristate "CFQ I/O scheduler"
 	default y
@@ -65,7 +69,7 @@ config IOSCHED_ZEN
 
 choice
 	prompt "Default I/O scheduler"
-	default DEFAULT_CFQ
+	default DEFAULT_MAPLE
 	help
 	  Select the I/O scheduler which will be used by default for all
 	  block devices.
@@ -88,6 +92,9 @@ choice
 	config DEFAULT_NOOP
 		bool "No-op"
 
+	config DEFAULT_MAPLE
+		bool "Maple" if IOSCHED_MAPLE=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -98,6 +105,7 @@ config DEFAULT_IOSCHED
 	default "fiops" if DEFAULT_FIOPS
 	default "zen" if DEFAULT_ZEN
 	default "noop" if DEFAULT_NOOP
+	default "maple" if DEFAULT_MAPLE
 
 endmenu
 
