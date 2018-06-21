@@ -7601,7 +7601,7 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int sd_flag, int wake_f
 			cpumask_test_cpu(cpu, tsk_cpus_allowed(p)));
 	}
 
-	if (energy_aware()) {
+	if (energy_aware() && !(cpu_rq(prev_cpu)->rd->overutilized)) {
 		bool sync_boost = sync && cpu >= start_cpu(true);
 		rcu_read_lock();
 		/*
