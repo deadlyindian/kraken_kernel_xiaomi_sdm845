@@ -5751,9 +5751,13 @@ int dsi_display_get_modes(struct dsi_display *display,
 		return -EINVAL;
 	}
 
-	*out_modes = NULL;
-
 	mutex_lock(&display->display_lock);
+	if (display->modes) {
+		pr_debug("return existing mode list\n");
+		goto exit;
+	}
+
+	*out_modes = NULL;
 
 	if (display->modes)
 		goto exit;
