@@ -33,6 +33,14 @@ config IOSCHED_MAPLE
 	tristate "Maple I/O scheduler"
 	default y
 
+onfig IOSCHED_ANXIETY
+	tristate "Anxiety I/O scheduler"
+	default y
+	---help---
+	  The Anxiety I/O scheduler prioritizes latency over everything
+		else. When a request comes in, it will use a lighweight
+		selection algorithm to swiftly process the current pending task.
+
 config IOSCHED_CFQ
 	tristate "CFQ I/O scheduler"
 	default y
@@ -124,6 +132,9 @@ choice
 		  any workload. It also tries to guarantee low latency to
 		  interactive and soft real-time applications.
 
+	config DEFAULT_ANXIETY
+		bool "Anxiety" if IOSCHED_ANXIETY=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -136,6 +147,7 @@ config DEFAULT_IOSCHED
 	default "noop" if DEFAULT_NOOP
 	default "maple" if DEFAULT_MAPLE
 	default "bfq" if DEFAULT_BFQ
+	default "anxiety" if DEFAULT_ANXIETY
 
 endmenu
 
