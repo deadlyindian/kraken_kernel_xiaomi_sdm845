@@ -4418,7 +4418,7 @@ no_ctx:
 	return 0;
 }
 
-int perf_event_release_kernel(struct perf_event *event)
+static int perf_event_release(struct perf_event *event)
 {
 	int ret;
 
@@ -4428,6 +4428,15 @@ int perf_event_release_kernel(struct perf_event *event)
 
 	return ret;
 }
+
+int perf_event_release_kernel(struct perf_event *event)
+{
+	get_online_cpus();
+	perf_event_release(event);
+	put_online_cpus();
+	return 0;
+}
+
 EXPORT_SYMBOL_GPL(perf_event_release_kernel);
 
 /*
@@ -11152,7 +11161,7 @@ static void perf_event_zombie_cleanup(unsigned int cpu)
 		 * PMU expects it to be in an active state
 		 */
 		event->state = PERF_EVENT_STATE_ACTIVE;
-		__perf_event_release_kernel(event);
+		perf_event_release(event);
 
 		spin_lock(&zombie_list_lock);
 	}
