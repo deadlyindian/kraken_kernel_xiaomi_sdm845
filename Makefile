@@ -404,7 +404,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-int-in-bool-context -Wno-parentheses -Wno-switch-unreachable -Wno-stringop-overflow \
 		   -Wno-format-overflow -Wno-nonnull -Wno-attributes -Wno-packed-not-aligned -Wno-sizeof-pointer-div \
 		   -Wno-sizeof-pointer-div -Wno-sizeof-pointer-memaccess -Wno-stringop-truncation -Wno-duplicate-decl-specifier \
-		   -Wno-misleading-indentation -Wno-memset-elt-size -Wno-bool-operation -Wno-maybe-uninitialized \
+		   -Wno-misleading-indentation -Wno-memset-elt-size -Wno-bool-operation -Wno-maybe-uninitialized -Wno-unused-function \
 		   -std=gnu89
 KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_AFLAGS_KERNEL :=
