@@ -12,7 +12,7 @@ while read -r distro package version _; do
 		VERSION="$version"
 		break
 	fi
-done < <(curl -A "$USER_AGENT" -LSs --connect-timeout 30 https://build.wireguard.com/distros.txt)
+done < distros.txt
 
 [[ -n $VERSION ]]
 
