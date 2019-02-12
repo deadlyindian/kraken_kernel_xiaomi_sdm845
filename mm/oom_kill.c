@@ -618,12 +618,10 @@ void wake_oom_reaper(struct task_struct *tsk)
 	 * the same task by both OOM killer and LMK.
 	 */
 	spin_lock(&oom_reaper_lock);
-	/* tsk is already queued? */
-	if (tsk == oom_reaper_list || tsk->oom_reaper_list) {
-		spin_unlock(&oom_reaper_lock);
+	/* mm is already queued? */
+	if (test_and_set_bit(MMF_OOM_REAP_QUEUED, &tsk->signal->oom_mm->flags))
 		return;
-	}
-
+	
 	get_task_struct(tsk);
 
 	tsk->oom_reaper_list = oom_reaper_list;
